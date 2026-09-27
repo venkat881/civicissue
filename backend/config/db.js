@@ -1,4 +1,6 @@
 const mysql = require('mysql2/promise');
+const path = require('path');
+
 require('dotenv').config();
 
 // A shared connection pool used by every controller/service.
@@ -10,12 +12,18 @@ const pool = mysql.createPool({
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || '',
   database: process.env.DB_NAME || 'civic_issue_system',
+
+  ssl: {
+    ca: require('fs').readFileSync(
+      path.join(__dirname, '../certs/ca.pem')
+    ),
+  },
+
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
-  decimalNumbers: true, // return DECIMAL columns as JS numbers, not strings
+  decimalNumbers: true,
 });
-
 async function testConnection() {
   try {
     const conn = await pool.getConnection();
