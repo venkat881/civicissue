@@ -38,8 +38,8 @@ export default function Home() {
           </div>
 
           <h1>
-            Make your community
-            <span> better, one report at a time.</span>
+            <span>Make your community
+             better, one report at a time.</span>
           </h1>
 
           <p className="hero-description">
